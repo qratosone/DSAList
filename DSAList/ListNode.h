@@ -60,7 +60,36 @@ public:
 			p = p->succ;
 		}
 	}
-
+	Posi(T) insertAsFirst(T const& e){
+		_size++;
+		header->insertAsSucc(e);
+	}
+	Posi(T) insertBefore(Posi(T) p,T const& e){
+		_size++;
+		p->insertAsPred(e);
+	}
+	Posi(T) insertAfter(Posi(T) p,T const& e){
+		_size++;
+		p->insertAsSucc(e);
+	}
+	List(Posi(T) p,int n){ // 从P开始复制n个节点
+		copyNodes(p,n);
+	}
+	List(List<T> const& L){//整体复制一个列表
+		copyNodes(L.first(),L._size);
+	}
+	List(List<T> const& L,int r,int n){  //循秩复制
+		copyNodes(L[r],n);
+	}
+	T remove(Posi(T) p){
+		T e=p->data;
+		p->pred->succ=p->succ;
+		p->succ->pred=p->pred;
+		delete p;
+		_size--;
+		return e;
+	}
+	
 
 };
 template <typename T>
